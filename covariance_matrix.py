@@ -6,13 +6,15 @@ import matplotlib.pyplot as plt
 
 # Fetch data
 tickers = ['AAPL', 'MSFT', 'GOOGL']
-data = yf.download(tickers, start='2024-01-01', end='2025-01-01')['Adj Close']
+data = yf.download(tickers, auto_adjust=True, start='2024-01-01', end='2025-01-01')['Close']
 
 # Calculate daily returns
 returns = data.pct_change().dropna()
 
 # Compute covariance matrix
 cov_matrix = np.cov(returns, rowvar=False)
+
+print(cov_matrix)
 
 # Visualize
 sns.heatmap(cov_matrix, annot=True, xticklabels=tickers, yticklabels=tickers)
