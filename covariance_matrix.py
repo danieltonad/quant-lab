@@ -8,17 +8,17 @@ import matplotlib.pyplot as plt
 tickers = ['AAPL', 'MSFT', 'GOOGL']
 data = yf.download(tickers, auto_adjust=True, start='2024-01-01', end='2025-05-21')['Close']
 
-print("Data => ", data)
+# print("Data => ", data)
 
 # Calculate daily returns
 returns = data.pct_change().dropna()
 
-print("Returns => " ,returns)
+# print("Returns => " ,returns)
 
 # Compute covariance matrix
 cov_matrix = np.cov(returns, rowvar=False)
 
-print("Cov =>", cov_matrix)
+# print("Cov =>", cov_matrix)
 
 # Visualize
 sns.heatmap(cov_matrix, annot=True, xticklabels=tickers, yticklabels=tickers)
