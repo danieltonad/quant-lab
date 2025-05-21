@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # Fetch data
 tickers = ['AAPL', 'MSFT', 'GOOGL']
-data = yf.download(tickers, auto_adjust=True, start='2024-01-01', end='2025-01-01')['Close']
+data = yf.download(tickers, auto_adjust=True, start='2024-01-01', end='2025-05-21')['Close']
 
 print("Data => ", data)
 
