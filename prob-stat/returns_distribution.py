@@ -1,18 +1,28 @@
+import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parameters
-mean_return = 0.001
-volatility = 0.02
-num_days = 1000
+# Download historical prices for Apple
+ticker = 'AAPL'
+data = yf.download(ticker, start='2023-01-01', end='2024-01-01')
 
-# Simulate returns
-returns = np.random.normal(mean_return, volatility, num_days)
-print(returns)
 
-# Plot histogram
-plt.hist(returns, bins=50, density=True, alpha=0.7)
-plt.title('Simulated Daily Returns (Normal Distribution)')
-plt.xlabel('Return')
+data['Daily Return'] = data['Adj Close'].pct_change()
+returns_real = data['Daily Return'].dropna()
+
+
+plt.hist(returns_real, bins=50, density=True, alpha=0.6, label='Real Returns')
+plt.xlabel('Daily Return')
 plt.ylabel('Density')
+plt.title(f'{ticker} Daily Returns (2023)')
+
+
+mean_real = returns_real.mean()
+std_real = returns_real.std()
+
+# Simulate returns using the same mean and std
+simulated_returns = np.random.normal(mean_real, std_real, len(returns_real))
+
+plt.hist(simulated_returns, bins=50, density=True, alpha=0.6, label='Simulated Normal')
+plt.legend()
 plt.show()
