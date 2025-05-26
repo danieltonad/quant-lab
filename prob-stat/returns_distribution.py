@@ -7,7 +7,7 @@ ticker = 'AAPL'
 data = yf.download(ticker, start='2023-01-01', end='2024-01-01')
 
 
-data['Daily Return'] = data['Adj Close'].pct_change()
+data['Daily Return'] = data['Close'].pct_change()
 returns_real = data['Daily Return'].dropna()
 
 
