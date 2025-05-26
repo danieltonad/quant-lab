@@ -1,9 +1,15 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-data = [1, 2, 3, 4, 5]
-mean = np.mean(data)
-std = np.std(data)
+data = np.random.normal(0, 1, 1000)
+plt.hist(data, bins=15)
+plt.show()
 
 
-print("Mean:", mean)
-print("Standard Deviation:", std)
+# data = [1, 2, 23, 4, 52, 18, -12, 69, 45]
+# mean = np.mean(data)
+# std = np.std(data)
+
+
+# print("Mean:", mean)
+# print("Standard Deviation:", std)
