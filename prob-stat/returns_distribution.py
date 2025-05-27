@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Download historical prices for Apple
-ticker = 'AAPL'
-data = yf.download(ticker, period="1y", progress=False, interval='1wk', auto_adjust=True)
+ticker = 'BTC-USD'
+data = yf.download(ticker, period="6mo", progress=False, interval='1d', auto_adjust=True)
 
 
 data['Daily Return'] = data['Close'].pct_change()
@@ -14,7 +14,7 @@ returns_real = data['Daily Return'].dropna()
 plt.hist(returns_real, bins=50, density=True, alpha=0.6, label='Real Returns')
 plt.xlabel('Daily Return')
 plt.ylabel('Density')
-plt.title(f'{ticker} Daily Returns (2023)')
+plt.title(f'{ticker} Daily Returns')
 
 
 mean_real = returns_real.mean()
