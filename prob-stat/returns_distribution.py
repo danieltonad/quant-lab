@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Download historical prices for Apple
 ticker = 'AAPL'
-data = yf.download(ticker, start='2023-01-01', end='2024-01-01')
+data = yf.download(ticker, period="1y", progress=False, interval='1wk', auto_adjust=True)
 
 
 data['Daily Return'] = data['Close'].pct_change()
