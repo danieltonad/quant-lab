@@ -25,9 +25,9 @@ print(f"Estimated sigma (volatility): {sigma:.4f}")
 T = 1.0  # 1 year
 dt = 1/252
 N = int(T / dt)
-S0 = df['Adj Close'].iloc[0]
+S0 = df['Close'].iloc[0]
 
-np.random.seed(42)
+np.random.seed(252) # psimulated price action determined bt the seed, lol
 Z = np.random.normal(0, 1, N)
 
 S_sim = np.zeros(N)
