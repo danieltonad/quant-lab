@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # --- Fetch stock data ---
 symbol = 'AAPL'
-df = yf.download(symbol, period='5y', progress=False, auto_adjust=True)  # Last 1 year of data
+df = yf.download(symbol, period='1y', progress=False, auto_adjust=True)  # Last 1 year of data
 
 # --- Calculate daily returns ---
 df['Return'] = df['Close'].pct_change()
@@ -27,7 +27,7 @@ dt = 1/252
 N = int(T / dt)
 S0 = df['Close'].iloc[0]
 
-np.random.seed(252) # simulated price action determined bt the seed, lol
+# np.random.seed(252) # simulated price action determined bt the seed, lol
 Z = np.random.normal(0, 1, N)
 
 S_sim = np.zeros(N)
