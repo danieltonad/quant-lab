@@ -1,0 +1,12 @@
+symbol: ANF
+interval: 1d
+average_price: 88.92
+quantity_acquired: 55.666
+amount_spent: 4950
+final_price: 77.15
+last_open_price: 74.5
+current_value: 4294.63
+capital_per_interval: 50
+start_date: 2025-01-01
+end_date: 2025-05-28
+PnL: -655.37
