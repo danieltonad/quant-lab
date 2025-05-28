@@ -63,5 +63,5 @@ if __name__ == "__main__":
     capital_per_interval = 50  # Amount to invest at each interval
 
     result = simulate_dca(symbol, start_date, end_date, capital_per_interval)
-    print(result)
+    # print(result)
     save_dict_to_text_file(result, f"{symbol}_dca_simulation.txt")
