@@ -22,7 +22,7 @@ mu = mean_daily * 252
 sigma = std_daily * np.sqrt(252)
 
 # --- Initial price ---
-S0 = df['Close'].iloc[-1]
+S0 = float(df['Close'].iloc[-1])
 
 # --- Monte Carlo Simulation ---
 simulations = np.zeros((num_paths, N))
