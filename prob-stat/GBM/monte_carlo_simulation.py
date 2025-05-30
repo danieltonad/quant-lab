@@ -43,10 +43,11 @@ plt.title(f"{symbol} - Simulated Price Paths ({num_paths} paths)")
 plt.xlabel("Day")
 plt.ylabel("Price")
 plt.grid(True)
-plt.show()
+# plt.show()
 
 # --- Risk Metrics at Final Day ---
 final_prices = simulations[:, -1]
+# print(final_prices)
 mean_price = np.mean(final_prices)
 VaR_5 = np.percentile(final_prices, 5)
 VaR_1 = np.percentile(final_prices, 1)
