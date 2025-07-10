@@ -101,11 +101,15 @@ def save_dict_to_text_file(data, filename):
 
 if __name__ == "__main__":
     # Example usage
-    symbol = 'MAG'
+    symbol = ['NFLX', 'TSLA']  # List of symbols or a single symbol as a string
     start_date = '2020-07-09'
     end_date = '2025-07-09'
     capital_per_interval = 50  # Amount to invest at each interval
 
-    result = simulate_dca_buy_only(symbol, start_date, end_date, capital_per_interval)
-    # print(result)
-    save_dict_to_text_file(result, f"./data/{symbol}_dca_simulation.txt")
+    if isinstance(symbol, str):
+        result = simulate_dca_buy_only(symbol, start_date, end_date, capital_per_interval)
+        save_dict_to_text_file(result, f"./data/{symbol}_dca_simulation.txt")
+    else:
+        for symb in symbol:
+            result = simulate_dca_buy_only(symb, start_date, end_date, capital_per_interval)
+            save_dict_to_text_file(result, f"./data/{symb}_dca_simulation.txt")
