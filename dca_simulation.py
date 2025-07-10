@@ -48,20 +48,64 @@ def simulate_dca(symbol, start_date, end_date, capital_per_interval, interval='1
         'PnL': round(pnl, 2)
     }
 
+
+def simulate_dca_buy_only(symbol, start_date, end_date, daily_capital, interval='1d'):
+    # Fetch daily historical prices
+    ticker = yf.Ticker(symbol)
+    data = ticker.history(start=start_date, end=end_date, interval=interval)
+
+    if data.empty:
+        return f"No data available for {symbol} in the given range."
+
+    # Ensure required columns are present and valid
+    data = data.dropna(subset=['Open', 'Close'])
+    data = data[data['Open'] > 0]
+
+    total_quantity = 0
+    total_spent = 0
+
+    # Simulate daily DCA buying
+    for _, row in data.iterrows():
+        qty = daily_capital / row['Open']
+        total_quantity += qty
+        total_spent += daily_capital
+
+    # Final stats
+    final_price = data['Close'].iloc[-1]
+    current_value = total_quantity * final_price
+    pnl = current_value - total_spent
+    avg_price = total_spent / total_quantity if total_quantity else 0
+
+    return {
+        'symbol': symbol,
+        'days_invested': len(data),
+        'average_price': round(avg_price, 2),
+        'quantity_acquired': round(total_quantity, 4),
+        'amount_spent': round(total_spent, 2),
+        'final_price': round(final_price, 2),
+        'current_value': round(current_value, 2),
+        'PnL': round(pnl, 2),
+        'return_pct': round((pnl / total_spent) * 100, 2) if total_spent else 0,
+        'start_date': start_date,
+        'end_date': end_date
+    }
+
     
 def save_dict_to_text_file(data, filename):
     with open(filename, 'w') as file:
         for key, value in data.items():
+            if isinstance(value, float):
+                value = f"{value:,.2f}"
             file.write(f"{key}: {value}\n")    
     
 
 if __name__ == "__main__":
     # Example usage
-    symbol = 'ANF'
-    start_date = '2025-01-01'
-    end_date = '2025-05-28'
+    symbol = 'MAG'
+    start_date = '2020-07-09'
+    end_date = '2025-07-09'
     capital_per_interval = 50  # Amount to invest at each interval
 
-    result = simulate_dca(symbol, start_date, end_date, capital_per_interval)
+    result = simulate_dca_buy_only(symbol, start_date, end_date, capital_per_interval)
     # print(result)
-    save_dict_to_text_file(result, f"{symbol}_dca_simulation.txt")
+    save_dict_to_text_file(result, f"./data/{symbol}_dca_simulation.txt")
