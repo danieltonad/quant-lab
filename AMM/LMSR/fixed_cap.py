@@ -2,7 +2,7 @@ import math
 import threading
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 
 class Side(Enum):
@@ -264,6 +264,7 @@ if __name__ == "__main__":
     # metrics
     print("Remaining Stake Capacity:", contract.max_stake())
     print("Final Prices:", {Side.YES.value: price[Side.YES], Side.NO.value: price[Side.NO]})
+    print(f"Count: (YES: {len([o for o in contract.order_history if o.side == Side.YES])}, NO: {len([o for o in contract.order_history if o.side == Side.NO])})")
     print(f"Total Deposits: {int(total_deposits):,.2f}")
     print(f"Total YES Deposits: {int(contract.yes_deposits):,.2f}")
     print(f"Total NO Deposits: {int(contract.no_deposits):,.2f}")
@@ -277,6 +278,6 @@ if __name__ == "__main__":
     print(f"Expected Pnl after fee (YES) : {int((total_deposits - contract.expected_yes_cashout) + yess_fee):,.2f} | (NO) : {int((total_deposits - contract.expected_no_cashout) + no_fee):,.2f}")
 
 
-    # print("\n\nOrder History:-----------------------------------------------------------------------")
-    # for order in contract.order_history:
-    #     print(f"Stake: {order.stake}, Side: {order.side.value}, Price: {order.price:,.2f}, Cashout: {order.expected_cashout:,.2f}")
+    print("\n\n------------------ Order History ----------------------------")
+    for order in contract.order_history:
+        print(f"Stake: {order.stake:,.2f}, Side: {order.side.value}, Price: {order.price:,.2f}, Cashout: {order.expected_cashout:,.2f}")

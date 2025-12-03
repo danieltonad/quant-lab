@@ -33,7 +33,8 @@ def round_figure(x: float, prec: int = 2) -> float:
 
 
 def warning_msg(msg: str):
-    pass  # or print(f"[WARNING] {msg}")
+    # print(f"[WARNING] {msg}")
+    pass  # or 
 
 
 class LMSRContract:
@@ -145,12 +146,14 @@ class LMSRContract:
             # Global risk check (LMSR worst-case)
             current_loss = self.cost(self.q_T, self.q_F) - self.cost(0.0, 0.0)
             if current_loss >= self.risk_cap:
+                warning_msg("Cannot accept trade: risk cap reached.")
                 return Order(self.contract_id, 0, 0, 0, side, 0.0)
 
             prices = self.price()
             p_self = prices[side]
             max_allowed = self.max_stake_for_side(side)
             if stake > max_allowed:
+                warning_msg(f"Trade stake ${stake:,.2f} exceeds max allowed ${max_allowed:,.2f} for side {side.value}.")
                 return Order(self.contract_id, 0, 0, 0, side, 0.0)
 
             # Execute trade
@@ -221,6 +224,11 @@ if __name__ == "__main__":
         stake = random.uniform(25, 500)
         side = random.choice([Side.YES, Side.NO])
         order = contract.buy(side, stake)
+        # print(f"Order {i+1:03d}: Buy ${stake:,.2f} {side.value} -> "
+        #       f"Price: {order.price:.4f}, Expected Cashout: ${order.expected_cashout:,.2f} "
+        #       f"{'(ACCEPTED)' if order.stake > 0 else '(REJECTED)'}")
+        print(f"    New Quote: YES {contract.price()[Side.YES]:.4f} / NO {contract.price()[Side.NO]:.4f}")
+        print(f"    Max YES: ${contract.max_stake_for_side(Side.YES):,.2f}, Max NO: ${contract.max_stake_for_side(Side.NO):,.2f}")
         if order.stake > 0:
             accepted += 1
 
